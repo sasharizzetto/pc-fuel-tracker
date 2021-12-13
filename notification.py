@@ -43,10 +43,9 @@ def getWeight(p):
         try:
                 
             bodyChar = p.getCharacteristics(1, 0xFFFF, BODY_INFO_UUID)[0]
-            
-            value = bodyChar.read()
-            splitted = str(value).split("\\x")
-            weight = splitted[13] + splitted[12]
+            byteVal = bodyChar.read()
+            value = byteVal.hex()
+            weight = value[24:26] + value[22:24]
             finalWeight = 0.01 * int(weight, 16)
             print("Hex: " + weight)
             print("Peso rilevato: " + str(finalWeight))
@@ -59,7 +58,6 @@ def getWeight(p):
         
     sendToDB(finalWeight)   
     waitForConnection()
-
 
 #start application
 waitForConnection()
